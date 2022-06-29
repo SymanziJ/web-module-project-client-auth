@@ -1,36 +1,44 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect, NavLink } from 'react-router-dom';
 
-const Login = () => {
-  return (<h1>Login</h1>)
-}
+import Login from './components/Login';
+import FriendsList from './components/FriendsList';
+import AddFriends from './components/AddFriends';
+import Logout from './components/Logout';
 
-const FriendsList = () => {
-  return (<h1>Friends List</h1>)
-}
+import PrivateRoute from './components/PrivateRoute';
 
-const AddFriends = () => {
-  return (<h1>Add Friend</h1>)
-}
 
 function App() {
   return (
     <Router>
+      <header>
+        <h2>Friends Database</h2>
+        <nav>
+          <NavLink className="link" to="/login">Login</NavLink>
+          <NavLink className="link" to="/friends">Friends List</NavLink>
+          <NavLink className="link" to="/friends/add">Add Friend</NavLink>
+          <NavLink className="link" to="/logout">Logout</NavLink>
+        </nav>
+      </header>
+      
       <div className="App">
         <Switch>
           <Route exact path="/">
             <Login/>
           </Route>
+
           <Route path="/login">
             <Redirect to="/" />
           </Route>
-          <Route path="/friends">
-            <FriendsList/>
-          </Route>
-          <Route path="/addfriends">
-            <AddFriends/>
-          </Route>  
+
+          <PrivateRoute exact path="/friends" component={FriendsList}/>
+
+          <PrivateRoute path="/friends/add" component={AddFriends}/>
+
+          <PrivateRoute path="/logout" component={Logout}/>
+
         </Switch>
       </div>
     </Router>

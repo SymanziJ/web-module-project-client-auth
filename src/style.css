@@ -10,3 +10,8 @@ html, body, #root {
 label {
     display:block;
 }
+
+nav {
+    display: flex;
+    justify-content: center;
+}
